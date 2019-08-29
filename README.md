@@ -81,28 +81,14 @@ The best way, however, is to use helm and package this app.
 
 ## API ENDPOINTS Exposed
 
-Endpoint            =       /
-Request Header      =
-Request Body        =
-
-Endpoint            =       /passengerlist
-Request Header      =       Content-Type: application/json
-Request Body        =
-
-Endpoint            =       /postpassenger
-Request Header      =       Content-Type: application/json
-Request Body        =       {"survived":false,"passengerClass":2,"name":"Post-Test-0","sex":"male","age":27.0,"siblingsOrSpousesAboard":0,"parentsOrChildrenAboard":0,"fare":13.0}
-
-Endpoint            =       /getpassenger/<uuid>
-Request Header      =       Content-Type: application/json
-Request Body        =
-
-Endpoint            =       /deletepassenger<uuid>
-Request Header      =       Content-Type: application/json
-Request Body        =
-
-Endpoint            =       /putpassenger/<uuid>
-Request Header      =       Content-Type: application/json
+Endpoint    |       Request Header  |       Request Body
+------------|-----------------------|-------------------
+: / :|: Content-Type: application/json :|
+    /passengerlist         | Content-Type: application/json              |                                                  |
+    /getpassenger/<uuid>   | Content-Type: application/json              |                                                  |
+    /postpassenger         | Content-Type: application/json              | {"survived":false,"passengerClass":2,"name":"Post-Test-0","sex":"male","age":27.0,"siblingsOrSpousesAboard":0,"parentsOrChildrenAboard":0,"fare":13.0}       |
+    /deletepassenger<uuid> | Content-Type: application/json              |
+    /putpassenger/<uuid>   | Content-Type: application/json              | {"survived":false,"passengerClass":2,"name":"Put-Test-0","sex":"male","age":27.0,"siblingsOrSpousesAboard":0,"parentsOrChildrenAboard":0,"fare":13.0}
 
 ## TROUBLESHOOTING
 
