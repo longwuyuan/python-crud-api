@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    run: pycrudapi
+  name: pycrudapi
+  namespace: python-crud-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: pycrudapi
+  template:
+    metadata:
+      labels:
+        run: pycrudapi
+    spec:
+      containers:
+      - image: pycrudapi
+        imagePullPolicy: IfNotPresent
+        name: pycrudapi
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always

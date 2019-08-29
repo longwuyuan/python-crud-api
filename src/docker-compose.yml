@@ -1,0 +1,16 @@
+version: '3'
+services:
+  pycrudapi:
+    build:
+      context: ./pycrudapi/.
+    ports:
+      - "80:80"
+  postgres0:
+    build: 
+      context: ./postgres0/.
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=titanicdb
+      - POSTGRES_USER=dbuser0
+      - POSTGRES_PASSWORD=pwd0* 

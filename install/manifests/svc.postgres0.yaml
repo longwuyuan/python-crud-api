@@ -1,0 +1,19 @@
+# svc_postgres0.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: postgres0
+  name: postgres0
+  namespace: python-crud-api
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    run: postgres0
+  type: ClusterIP
+status:
+  loadBalancer: {}
