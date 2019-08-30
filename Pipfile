@@ -6,12 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-psycopg2 = "*"
-flask = "*"
-flask-uuid = "*"
-gunicorn = "*"
 pylint = "*"
-neovim = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
