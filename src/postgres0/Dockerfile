@@ -1,3 +1,3 @@
 FROM postgres:alpine
 
-COPY conf  /docker-entrypoint-initdb.d/
+ADD https://github.com/longwuyuan/python-crud-api/tree/master/src/postgres0/conf  /docker-entrypoint-initdb.d/

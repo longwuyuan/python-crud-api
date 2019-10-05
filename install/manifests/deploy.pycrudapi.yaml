@@ -17,7 +17,7 @@ spec:
         run: pycrudapi
     spec:
       containers:
-      - image: pycrudapi
+      - image: longwuyuan/pycrudapi
         imagePullPolicy: IfNotPresent
         name: pycrudapi
         ports:

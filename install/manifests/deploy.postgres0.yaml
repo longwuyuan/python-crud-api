@@ -32,7 +32,7 @@ spec:
             secretKeyRef:
               name: postgres0.creds
               key: password
-        image: postgres0
+        image: longwuyuan/postgres0
         imagePullPolicy: IfNotPresent
         name: postgres0
         ports:
