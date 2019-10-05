@@ -11,7 +11,7 @@ WORKDIR /code/python-crud-api/src/pycrudapi
 # Configure the container
 ADD https://github.com/longwuyuan/python-crud-api/tree/master/src/pycrudapi/conf /conf
 RUN rm /etc/nginx/conf.d/default.conf && \
-    mv /conf/default.conf /etc/nginx/conf.d/default.conf && \
+    cp /conf/default.conf /etc/nginx/conf.d/default.conf && \
     rm /etc/supervisord.conf && \
     mv /conf/supervisord.conf /etc/supervisord.conf && \
     mkdir /etc/supervisor.d /var/log/supervisord
