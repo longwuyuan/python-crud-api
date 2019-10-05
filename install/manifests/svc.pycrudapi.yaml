@@ -13,6 +13,6 @@ spec:
   selector:
     run: pycrudapi
   sessionAffinity: None
-  type: NodePort
+  type: ClusterIP
 status:
   loadBalancer: {}
