@@ -6,17 +6,18 @@ RUN apk -u --no-cache add gcc musl-dev linux-headers python3-dev postgresql-dev 
 # Install needed python modules (and isolate layer for cache)
 RUN pip3 install flask flask_uuid psycopg2-binary gunicorn 
 
-WORKDIR /code/python-crud-api/src/pycrudapi
-
+RUN apk add -u git && \
+    mkdir /code && \
+    cd /code && \
+    git clone https://github.com/longwuyuan/python-crud-api.git && \
 # Configure the container
-ADD https://github.com/longwuyuan/python-crud-api/tree/master/src/pycrudapi/conf /conf
-RUN rm /etc/nginx/conf.d/default.conf && \
-    cp /conf/default.conf /etc/nginx/conf.d/default.conf && \
+    rm /etc/nginx/conf.d/default.conf && \
+    cp /code/python-crud-api/src/pycrudapi/conf/default.conf /etc/nginx/conf.d/default.conf && \
     rm /etc/supervisord.conf && \
-    mv /conf/supervisord.conf /etc/supervisord.conf && \
-    mkdir /etc/supervisor.d /var/log/supervisord
+    cp /code/python-crud-api/src/pycrudapi/conf/supervisord.conf /etc/supervisord.conf && \
+    mkdir /etc/supervisor.d /var/log/supervisord && \
+    cp -r /code/python-crud-api/src/pycrudapi/app /app
 
-ADD https://github.com/longwuyuan/python-crud-api/tree/master/src/pycrudapi/app /app
 WORKDIR /app
 
 EXPOSE 80
