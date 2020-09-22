@@ -4,6 +4,8 @@ pipeline {
     stage('build') {
       steps {
         echo "This is Build stage"
+        cd src/pycrudapi
+        docker build --rm -t pycrudapi .
       }
     }
     stage('test') {
