@@ -2,12 +2,12 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ release, main ]
+    branches: [ dev, main ]
     paths:
       - 'src/pycrudapi/**'
 
   pull_request:
-    branches: [ release, main ]
+    branches: [ dev, main ]
     paths:
       - 'src/pycrudapi/**'
 
