@@ -1,0 +1,6 @@
+.git
+.vscode
+.gitlab_token
+.gitlab_docker_config.json
+__pycache*
+myinstall.sh

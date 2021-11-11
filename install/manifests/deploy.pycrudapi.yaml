@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: null
+  labels:
+    run: pycrudapi
+  name: pycrudapi
+  namespace: python-crud-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: pycrudapi
+  template:
+    metadata:
+      labels:
+        run: pycrudapi
+    spec:
+      containers:
+      - image: ghcr.io/longwuyuan/python-crud-api:release-824947a
+        imagePullPolicy: IfNotPresent
+        name: pycrudapi
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always

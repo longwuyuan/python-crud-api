@@ -1,0 +1,54 @@
+name: Ppostgres0 Docker Image CI
+
+on:
+  push:
+    branches: [ release ]
+    paths:
+      - 'src/postgres0/**'
+
+  pull_request:
+    branches: [ release ]
+    paths:
+      - 'src/postgres0/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}-postgres0
+
+jobs:
+  build-and-push-postgres0-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to registry(ghcr.io)
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v2
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+              type=ref,event=branch
+              type=sha
+              type=sha,prefix={{branch}}-
+              type=sha,format=long
+              type=sha,format=long,prefix={{branch}}-
+              type=raw,value=latest
+      - name: Build python-crud-api-postgres0 image and push to ghcr.io
+        uses: docker/build-push-action@v2
+        with:
+          context: ./src/postgres0
+          tags: ${{ steps.meta.outputs.tags }}
+          push: true
+          labels: ${{ steps.meta.outputs.labels }}

@@ -1,0 +1,42 @@
+# deploy_postgres.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    run: postgres0
+  name: postgres0
+  namespace: python-crud-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: postgres0
+  template:
+    metadata:
+      labels:
+        run: postgres0
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_DB
+          value: titanicdb
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres0.creds
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres0.creds
+              key: password
+        image: ghcr.io/longwuyuan/postgres0:latest
+        imagePullPolicy: IfNotPresent
+        name: postgres0
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always

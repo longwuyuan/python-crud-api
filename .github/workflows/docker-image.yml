@@ -1,0 +1,80 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ release, main ]
+    paths:
+      - 'src/pycrudapi/**'
+
+  pull_request:
+    branches: [ release, main ]
+    paths:
+      - 'src/pycrudapi/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Login to registry(ghcr.io)
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v2
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: type=sha,prefix={{branch}}-
+
+      - name: Build pycrudapi image and push to ghcr.io
+        uses: docker/build-push-action@v2
+        with:
+          context: ./src/pycrudapi
+          tags: ${{ steps.meta.outputs.tags }}
+          push: true
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Setup Kubectl Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "4.4.0"
+
+      - name: Update Kubernetes resources with kubectl kustomize
+        env:
+          LATEST_IMAGE: ${{ steps.meta.outputs.tags }}
+        run: |
+          cd install/manifests
+          LATEST_TAG="`echo $LATEST_IMAGE|cut -f2 -d':'`" 
+          sed -i "s/newTag:.*/newTag: $LATEST_TAG/" kustomization.yaml
+          kubectl kustomize ./ | tee deploy.pycrudapi.new
+          cp deploy.pycrudapi.new deploy.pycrudapi.yaml
+          rm deploy.pycrudapi.new
+        
+      - name: Commit files and changes
+        run: |
+          git config --local user.email "longwuyuan@gmail.com"
+          git config --local user.name "longwuyuan"
+          git add .
+          git commit -am "Bump image tag"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GHCR_PAT }}
+          branch: ${{ github.ref }}
