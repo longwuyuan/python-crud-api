@@ -6,6 +6,6 @@ resources:
 - svc.pycrudapi.yaml
 images:
 - name: ghcr.io/longwuyuan/python-crud-api
-  newTag: main-8134a3a
+  newTag: main-0a4f7cf
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
