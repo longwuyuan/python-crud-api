@@ -59,19 +59,17 @@ jobs:
         env:
           LATEST_IMAGE: ${{ steps.meta.outputs.tags }}
         run: |
-          cd install/manifests
+          cd src/kubernetes/base
           LATEST_TAG="`echo $LATEST_IMAGE|cut -f2 -d':'`" 
           sed -i "s/newTag:.*/newTag: $LATEST_TAG/" kustomization.yaml
-          kubectl kustomize ./ | tee deploy.pycrudapi.new
-          cp deploy.pycrudapi.new deploy.pycrudapi.yaml
-          rm deploy.pycrudapi.new
+          kubectl kustomize ./ | tee ../../../install/python-crud-api.yaml
         
       - name: Commit files and changes
         run: |
           git config --local user.email "longwuyuan@gmail.com"
           git config --local user.name "longwuyuan"
-          git add .
-          git commit -am "Bump image tag"
+          git add -A
+          git commit -am "Bump to $LATEST_TAG"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
