@@ -1,5 +1,9 @@
 resources:
+- deploy.postgres0.yaml
 - deploy.pycrudapi.yaml
+- secret.postgres0.creds.yaml
+- svc.postgres0.yaml
+- svc.pycrudapi.yaml
 images:
 - name: ghcr.io/longwuyuan/python-crud-api
   newTag: main-5afb7f2
