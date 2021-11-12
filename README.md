@@ -36,42 +36,17 @@ A project can get microserviced, containerised, orchestrated and automated in th
 
 ## REQUIREMENTS
 
-Minikube <https://github.com/kubernetes/minikube> is required to use this app.
+- A functional healthy kubernetes cluster is required to run the app. I tested it on a minikube cluster and a kind cluster.
 
-You can also find alternate ways to use the app but use of the docker daemon, inside the minikube vm, to build images is the quickest way. The images are already available for the workloads and there is no need to pull them from some registry on the internet or the network and hence avoid authentication. This helps the app get deployed in seconds anywhere anytime.
+## INSTALLATION
 
-## INSTALLATION - minikube
+There are multiple ways to install the app
 
-* Minikube provides the docker-environment config details if you type "minikube docker-env".
+  1. kubectl apply -f https://github.com/longwuyuan/python-crud-api/blob/524e85b528ec0c74e6d12955226a4b6b6e16b6c1/install/python-crud-api.yaml
 
-        * Pass mninikube's docker-environment config, to your laptop's docker-client ;
+  2. If the code is downloaded locally, then just `kubectl apply -f <path_to_approot>/install/python-crud-api.yaml
 
-        ```
-        eval $(minikube docker-env)
-        ```
-
-        * If successful, then the docker commands, executed in that specific shell (where you typed "eval $(minikube docker-env), will run inside the minikube VM, instead of docker-daemon as configured on your Host OS. This is one easy method to build the images locally (on the minikube vm) . Once the docker images needed to run the microservices, are already built and ready for use in the mnikube VM, we have avoided authentication to registries. But internet connection is required to pull the required bits, specified in the Dockerfile.
-
-
-        * This local build is automated by the shell script "install_on_minikube.sh". But please use your awareness as not all use-cases are accounted for. If there are problems or issues, please report them and will be fixed.
-
-1. Make sure you have the docker command working on your laptop.
-
-2. Make sure you have __kubectl__ working on your laptop.
-
-3. Go to the minikube folder.
-
-4. Run the script.
-
-        ```
-        chmod +x ./install_on_minikube.sh && ./install_on_minikube.sh
-        ```
-
-The best way, however, is to use helm and package this app.
-
-## INSTALLATION - docker-compose
-
-* Use the docker-compose file at __(path_to_your_git_clone_root_folder_of_this_project)__/src/docker-compose.yml
+  3. Use the docker-compose file at __(path_to_your_git_clone_root_folder_of_this_project)__/src/docker-compose.yml
 
         ```
         cd <gitroot>/src/
@@ -90,7 +65,32 @@ Endpoint                    |       Request Header              |       Request 
 /putpassenger/\<uuid\>      | Content-Type: application/json    | {"survived":false,"passengerClass":2,"name":"Put-Test-Name","sex":"male","age":27.0,"siblingsOrSpousesAboard":0,"parentsOrChildrenAboard":0,"fare":13.0}
 /deletepassenger/\<uuid\>    | Content-Type: application/json    |
 
-## TROUBLESHOOTING
+## Networking
+
+- Install a ingress-controller on your cluster like https://kubernetes.github.io/ingress-nginx/ and create a ingress object like this ;
+  ```
+  kind: Ingress
+  metadata:
+    name: pycrudapi
+    namespace: python-crud-api
+  spec:
+    ingressClassName: nginx
+    rules:
+    - host: pycrudapi.dev.devopsdragon.com
+      http:
+        paths:
+        - path: /
+          pathType: Exact
+          backend:
+            service:
+              name: pycrudapi
+              port:
+                number: 80
+  ```
+
+- Use port-forwarding https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/ 
+
+## TROUBLESHOOTING TIPS
 
 * Create an issue.
 
@@ -110,15 +110,11 @@ Endpoint                    |       Request Header              |       Request 
 
 ## TODO - Fix db connection pool code (pool not closed now)
 
-## TODO : Generate helm chart in CI (using draft maybe)
-
-* The specs provided do not clarify if helm is installed or not. If helm is known to be installed, initialized and working then it would be a simple task to use draft or plain old helm to generate helm package in CI and installation could be done using the official recommended K8s packaging 'helm install'. Will wait for feedback.
-
 ## TODO : Write Test cases for CI
 
-* Good to have but not minimalist so need to balance it. In any case the test stage is part of the pipeline so will work on creating tests that run in gitlab-ci. just need to launch both microservices in docker-compose and run curl on the api's .
+* Good to have but not minimalist so need to balance it. In any case the test stage is part of the pipeline so will work on creating tests.
 
-## TODO : Several changes to make it simple & efficient
+## TODO : Several changes to make it simpler & more efficient
 
 ## REFERENCES
 
