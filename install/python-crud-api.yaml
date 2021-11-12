@@ -77,7 +77,7 @@ spec:
             secretKeyRef:
               key: password
               name: postgres0.creds
-        image: ghcr.io/longwuyuan/postgres0:latest
+        image: ghcr.io/longwuyuan/python-crud-api-postgres0:main-948e4de
         imagePullPolicy: IfNotPresent
         name: postgres0
         ports:
@@ -105,7 +105,7 @@ spec:
         run: pycrudapi
     spec:
       containers:
-      - image: ghcr.io/longwuyuan/python-crud-api:main-0a4f7cf
+      - image: ghcr.io/longwuyuan/python-crud-api:main-00f9860
         imagePullPolicy: IfNotPresent
         name: pycrudapi
         ports:
