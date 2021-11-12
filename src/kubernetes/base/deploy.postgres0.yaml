@@ -32,7 +32,7 @@ spec:
             secretKeyRef:
               name: postgres0.creds
               key: password
-        image: ghcr.io/longwuyuan/postgres0:latest
+        image: ghcr.io/longwuyuan/python-crud-api-postgres0:main-948e4de
         imagePullPolicy: IfNotPresent
         name: postgres0
         ports:
