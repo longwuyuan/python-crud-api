@@ -16,7 +16,7 @@ FlaskUUID(app)
 # Healthcheck
 @app.route('/hello')
 def index():
-    return jsonify({'message': '1'}), 201
+    return jsonify({'message': 'ok'}), 201
 
 try:
     pgdb_conn_pool = psycopg2.pool.ThreadedConnectionPool(1, 20, host="postgres0", user="dbuser0", password="pwd0*", database="titanicdb")
