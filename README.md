@@ -96,7 +96,7 @@ Endpoint                    |       Request Header              |       Request 
 - Use port-forwarding https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/ 
 
 ## CI/CD Pipeline
-
+```
         git commit
             |
 if /src/pycrudapi changed then build image
@@ -106,7 +106,7 @@ if /src/pycrudapi changed then build image
 run kubectl kustomize to change tag
             |
   publish new yaml at /install
-
+```
 
 ## TROUBLESHOOTING TIPS
 
