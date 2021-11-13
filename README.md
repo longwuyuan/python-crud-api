@@ -1,5 +1,7 @@
 # PYTHON CRUD API
 
+A CI/CD pipeline, for 4 api endpoints, written in flask, that generates yaml files for installation on Kubernetes, using kubectl Kustomize. 
+
 ## INTRODUCTION
 
 * This is a tiny app.
@@ -37,6 +39,7 @@ A project can get microserviced, containerised, orchestrated and automated in th
 ## REQUIREMENTS
 
 - A functional healthy kubernetes cluster is required to run the app. I tested it on a minikube cluster and a kind cluster.
+- A Github Token called GCHR_PAT, with repo & package read/write permissions is needed. Creating a token is documented here https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry .
 
 ## INSTALLATION
 
