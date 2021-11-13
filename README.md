@@ -67,7 +67,9 @@ Endpoint                    |       Request Header              |       Request 
 
 ## Networking
 
-- Install a ingress-controller on your cluster like https://kubernetes.github.io/ingress-nginx/ and create a ingress object like this ;
+- Make sure your Kubernetes cluster can provision a LoadBalancer from your cloud-provider. If your cluster is created using minikube, K3s, Kind or Kubeadm (on-premises or cloud) and does not have a provisioner for creating a LoadBalancer, then install Metallb https://metallb.org/installation/ .
+
+- Install a ingress-controller on your cluster like https://kubernetes.github.io/ingress-nginx/ . You can then create a ingress object to expose the app. A sample of the ingress object's yaml, looks like this. Change the host value to suit your needs. I had a cert for my domain so I used it. You can use with/without TLS. Some people may choose to not even use a LoadBalancer service for the ingress-controller and they may just use a service of type NodePort for the ingress-controller. That discussion is out of scope here but his is just a hint/note on networking ;
   ```
   kind: Ingress
   metadata:
@@ -76,11 +78,11 @@ Endpoint                    |       Request Header              |       Request 
   spec:
     ingressClassName: nginx
     rules:
-    - host: pycrudapi.dev.devopsdragon.com
+    - host: pycrudapi.dev.yourdomain.com
       http:
         paths:
         - path: /
-          pathType: Exact
+          pathType: Prefix
           backend:
             service:
               name: pycrudapi
