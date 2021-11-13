@@ -96,6 +96,9 @@ Endpoint                    |       Request Header              |       Request 
 - Use port-forwarding https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/ 
 
 ## CI/CD Pipeline
+
+- For the pycrudapi microservice
+
 ```
         git commit
             |
@@ -107,6 +110,10 @@ run kubectl kustomize to change tag
             |
   publish new yaml at /install
 ```
+
+- For the postgres0 microservice, the change will be rare and hardly ever needed. But if required, make the change and pipeline will build new image for postgres0 microservice and push to gcr. Then we manually change the /src/kubernetes/base/deploy.postgres0.yaml to reflect the new tag. TODO - automate this but low priority. 
+
+
 
 ## TROUBLESHOOTING TIPS
 
