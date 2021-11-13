@@ -1,5 +1,5 @@
 ## API(s) Microservice
-Python flask powered APIs for create, update, delete (CRUD) operations on a PostgreSQL-DB.
+Python flask powered APIs for create, update, delete (CRUD) operations on a PostgreSQL-DB
 - Flask provides the "views"/"routes" to make the app be web enabled.
 - flask_uuid module  https://github.com/wbolster/flask-uuid  brings a special unique advantage. We get the ability of handling UUID as UUID data-type, at the endpoints.
 - Psycopg2 __RealDictCursor__, http://initd.org/psycopg/docs/extras.html, is a feature of the psycopg module, that makes python work with PostgreSQL. There are superior modules for using postgres, like SQLAlchemy. But psycopg2 is order of magnitude simpler, faster and requires much much less code. When compared to really great tools like SQlAlchemy, there was no need for a schema hence, did not use SQLAlchemy.
