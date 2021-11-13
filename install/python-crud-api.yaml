@@ -105,7 +105,7 @@ spec:
         run: pycrudapi
     spec:
       containers:
-      - image: ghcr.io/longwuyuan/python-crud-api:main-f81d10d
+      - image: ghcr.io/longwuyuan/python-crud-api:main-d057d96
         imagePullPolicy: IfNotPresent
         name: pycrudapi
         ports:
