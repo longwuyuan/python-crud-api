@@ -1,10 +1,15 @@
+# CI/CD - High Level Architecture
+
+![ci-cd-high-lvel-architecture](https://user-images.githubusercontent.com/5085914/142748681-65e2ff9c-85f1-4489-9385-5b0de8e8da35.png)
+
+# Microservices - 12factor Visualized (taken from 12factor.net)
+
+![12factor](https://user-images.githubusercontent.com/5085914/142748772-3ee07fab-0396-4c4f-84a8-9c5551d39081.png)
+
+
 # PYTHON CRUD API
 
 A CI/CD pipeline, for 4 api endpoints, written in flask, that generates yaml files for installation on Kubernetes, using kubectl Kustomize. 
-
-# High Level Architecture Diagram for Ci/CD
-
-![ci-cd-high-lvel-architecture](https://user-images.githubusercontent.com/5085914/142748681-65e2ff9c-85f1-4489-9385-5b0de8e8da35.png)
 
 
 ## INTRODUCTION
