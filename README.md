@@ -2,6 +2,11 @@
 
 A CI/CD pipeline, for 4 api endpoints, written in flask, that generates yaml files for installation on Kubernetes, using kubectl Kustomize. 
 
+# High Level Architecture Diagram for Ci/CD
+
+![ci-cd-high-lvel-architecture](https://user-images.githubusercontent.com/5085914/142748681-65e2ff9c-85f1-4489-9385-5b0de8e8da35.png)
+
+
 ## INTRODUCTION
 
 * This is a tiny app.
