@@ -9,7 +9,7 @@
 
 # PYTHON CRUD API
 
-A CI/CD pipeline, for 4 api endpoints, written in flask, that generates yaml files for installation on Kubernetes, using kubectl Kustomize. 
+A CI/CD pipeline, for 4 api endpoints, written in flask, that generates yaml files (kubectl Kustomize), for installation on Kubernetes
 
 
 ## INTRODUCTION
