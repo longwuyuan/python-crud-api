@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Create and publish pycrudapi Docker image and K8s manifest
 
 on:
   push:
@@ -11,64 +11,64 @@ on:
 
 env:
   REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
+  build-and-push-image-and-manifest:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          persist-credentials: false
+          persist-credentials: false 
+          fetch-depth: 0
 
-      - name: Login to registry(ghcr.io)
-        uses: docker/login-action@v1
+      - name: Log in to ghcr.io
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set output
-        id: get_branchname
-        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: type=sha,prefix={{branch}}-
 
-      - name: Add branchname to image_name
-        id: add_branchname
-        env:
-          IMAGE_NAME: ${{ github.repository }}/${{ steps.get_branchname.outputs.short_ref }}
-
-      - name: Build pycrudapi image and push to ghcr.io
-        uses: docker/build-push-action@v2
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./src/pycrudapi
-          tags: ${{ github.sha }}
           push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Setup Kubectl Kustomize
         uses: imranismail/setup-kustomize@v1
         with:
           kustomize-version: "4.4.0"
 
-      - name: Update Kubernetes resources with kubectl kustomize
+      - name: Update K8S manifests
         env:
-          NEW_TAG: $GITHUB_SHA
+          FULL_IMAGE_NAME: ${{ steps.meta.outputs.tags }}
         run: |
           cd src/kubernetes/base
-          sed -i "s/newTag:.*/newTag: $NEW_TAG/" kustomization.yaml
-          kubectl kustomize ./ | tee ../../../install/python-crud-api.yaml
-        
-      - name: Commit files and changes
-        run: |
+          NEW_TAG=`echo $FULL_IMAGE_NAME | cut -f2 -d":"`
+          sed -i "s|newTag:.*|newTag: $NEW_TAG|" kustomization.yaml
+          kubectl kustomize ./ > ../../../install/pycrudapi.yaml
           git config --local user.email "longwuyuan@gmail.com"
           git config --local user.name "longwuyuan"
           git add -A
-          git commit -am "Bump app version"
+          COMMIT_MSG="Change pycrudapi image tag to $NEW_TAG"
+          git commit -m "$COMMIT_MSG"
 
-      - name: Push changes
+      - name: Push updated K8S manifests
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GHCR_PAT }}

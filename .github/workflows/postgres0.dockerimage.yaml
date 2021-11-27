@@ -1,4 +1,4 @@
-name: Ppostgres0 Docker Image CI
+name: Postgres0 Docker Image CI
 
 on:
   push:
