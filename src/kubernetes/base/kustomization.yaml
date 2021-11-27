@@ -6,4 +6,4 @@ resources:
 - svc.pycrudapi.yaml
 images:
 - name: ghcr.io/longwuyuan/python-crud-api
-  newTag: main-d057d96
+  newTag: main-1e87c4c
