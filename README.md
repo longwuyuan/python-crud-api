@@ -14,52 +14,51 @@ A CI/CD pipeline, for 4 api endpoints, written in flask, that generates yaml fil
 
 ## INTRODUCTION
 
-* This is a tiny app.
+* This is a tiny app. Its basically about names & details of passengers on a flight
 
 * This app implements CRUD (create, update, delete)
 
-* The CRUD functions are availale as a api.
+* The CRUD functions are availale as 4 api(s)
 
-* Language used is Python
+* Language used is Python and framework is flask
 
-* Python modules are flask, flask_uuid and psycopg2.
+* Other Python modules used are flask_uuid and psycopg2
 
-* The WSGI server used is gunicorn.
+* The WSGI server used is gunicorn
 
-* Nginx is running in reverseproxy mode for the api microservice.
+* A Nginx instance is running in reverseproxy mode for the api microservice
 
-* The app works on kubernetes or in docker-compose.
+* The app works on kubernetes or in docker-compose
 
-* The api microservice is exposed to clients outside the k8s cluster via a "NodePort" type K8s service.
+* The api microservice needs to be exposed to clients outside the k8s cluster
 
-* API connects to a postgresql database.
+* API uses a postgresql instance
 
-* There is a deployment script included, for installing the app to with minikube.
+* There is a K8s manifest in the /install directory that can be used as `kubectl apply -f`, for deploying the app to K8s
 
-* There are 2 docker images. One for the postgres microservice and another for the api microservice.
+* There are 2 docker images. One for the postgres microservice and another for the api microservice
 
-* There are microservice specific readme files, in the respective src sub-folder.
+* There are microservice specific readme files, in the respective src sub-folder
 
-* The app is a single file of python code, instead of multiple files as per MVC.
+* The app is a single file of python code, instead of multiple files as per MVC
 
-* Nginx in reverseproxy mode, and the WSGI server "gunicorn" (in python crud api microservice), are started by Supervisord.
+* Nginx in reverseproxy mode, and the WSGI server "gunicorn" (in python crud api microservice), are started by Supervisord
 
-A project can get microserviced, containerised, orchestrated and automated in the engineering workflow. Gitlab-Autodevops (with all its pros & cons) is one of the shortest path to integrating, SCM, Code-Coverage, CI/CD, Monitoring and Logging. Albeit the use of heroku buildpacks potentially, introduces surprises that may be difficult to control easily.
 
 ## REQUIREMENTS
 
-- A functional healthy kubernetes cluster is required to run the app. I tested it on a minikube cluster and a kind cluster.
-- A Github Token called GCHR_PAT, with repo & package read/write permissions is needed. Creating a token is documented here https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry .
+- A functional healthy kubernetes cluster is required to run the app. Tested on minikube, kind, GKE & EKS clusters
+- For the CI pipeline, a Github Token called GCHR_PAT, with repo & package read/write permissions is needed. Creating a token is documented here https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry .
 
 ## INSTALLATION
 
 There are multiple ways to install the app
 
-  1. kubectl apply -f https://github.com/longwuyuan/python-crud-api/blob/524e85b528ec0c74e6d12955226a4b6b6e16b6c1/install/python-crud-api.yaml
+  1. kubectl apply -f https://github.com/longwuyuan/python-crud-api/blob/524e85b528ec0c74e6d12955226a4b6b6e16b6c1/install/pycrudapi.yaml
 
-  2. If the code is downloaded locally, then just `kubectl apply -f <path_to_approot>/install/python-crud-api.yaml
+  2. If the code is downloaded locally, then just `kubectl apply -f <path_to_approot>/install/pycrudapi.yaml`
 
-  3. Use the docker-compose file at __(path_to_your_git_clone_root_folder_of_this_project)__/src/docker-compose.yml
+  3. If you want to use docker-compose (not recommended) then use the docker-compose file at __(path_to_your_git_clone_root_folder_of_this_project)__/src/docker-compose.yml
 
         ```
         cd <gitroot>/src/
