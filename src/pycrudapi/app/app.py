@@ -19,7 +19,7 @@ def index():
     return jsonify({'message': 'ok'}), 201
 
 @app.route('/zero')
-def index():
+def zero():
     return jsonify({'0'}), 201
 
 try:
