@@ -48,7 +48,6 @@ status:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations: null
   labels:
     run: postgres0
   name: postgres0
@@ -89,7 +88,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations: null
   labels:
     run: pycrudapi
   name: pycrudapi
@@ -105,7 +103,7 @@ spec:
         run: pycrudapi
     spec:
       containers:
-      - image: ghcr.io/longwuyuan/python-crud-api:main-1e87c4c
+      - image: ghcr.io/longwuyuan/python-crud-api:main-17c244f
         imagePullPolicy: IfNotPresent
         name: pycrudapi
         ports:
