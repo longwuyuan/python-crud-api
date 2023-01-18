@@ -18,6 +18,10 @@ FlaskUUID(app)
 def index():
     return jsonify({'message': 'ok'}), 201
 
+@app.route('/zero')
+def index():
+    return jsonify({'0'}), 201
+
 try:
     pgdb_conn_pool = psycopg2.pool.ThreadedConnectionPool(1, 20, host="postgres0", user="dbuser0", password="pwd0*", database="titanicdb")
 
