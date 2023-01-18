@@ -20,7 +20,7 @@ def index():
 
 @app.route('/zero')
 def zero():
-    return jsonify({'0'}), 201
+    return jsonify({'0':''}), 201
 
 try:
     pgdb_conn_pool = psycopg2.pool.ThreadedConnectionPool(1, 20, host="postgres0", user="dbuser0", password="pwd0*", database="titanicdb")
