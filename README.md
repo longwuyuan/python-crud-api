@@ -71,6 +71,7 @@ There are multiple ways to install the app
 Endpoint                    |       Request Header              |       Request Body
 ----------------------------|-----------------------------------|-------------------
 /hello                      | Content-Type: application/json    |
+/zero                       | Content-Type: application/json    |
 /passengerlist              | Content-Type: application/json    |
 /getpassenger/\<uuid\>      | Content-Type: application/json    |
 /postpassenger              | Content-Type: application/json              | {"survived":true,"passengerClass":2,"name":"Post-Test-Name","sex":"male","age":27.0,"siblingsOrSpousesAboard":0,"parentsOrChildrenAboard":0,"fare":13.0}       |
